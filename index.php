@@ -12,7 +12,7 @@
 </head>
 <body>
     <header class="top-navigation">
-        <div class="news-headline">
+        <!--div class="news-headline">
             <div class="content">
                 <div class="message">
                     <p><a href="edital.php"><i class="fa fa-warning"></i> Edital de convocação</a></p>
@@ -21,7 +21,7 @@
                     <p><a href="#"><i class="fa fa-close"></i></a></p>
                 </div>
             </div>
-        </div>
+        </div-->
 
         <div class="content">
             <nav class="main">
