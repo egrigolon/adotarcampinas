@@ -4,16 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
   <title>{{title }}</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <script type="text/javascript" src="/js/vendor.min.js"></script>
   {{#if ENV_DEVELOPMENT}}
+    <link rel="stylesheet" href="/css/adotarcampinas.css">
+    <script type="text/javascript" src="/js/adotarcampinas.js"></script>
     <script src="http://localhost:35729/livereload.js"></script>
+  {{else}}
+  <link rel="stylesheet" href="/css/adotarcampinas.min.css">
+  <script type="text/javascript" src="/js/adotarcampinas.min.js"></script>
   {{/if}}
 </head>
 <body>
-
-
   {{{body}}}
-
-
   </body>
 </html>

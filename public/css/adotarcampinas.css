@@ -4,3 +4,7 @@ body {
 
 a {
   color: #00B7FF; }
+
+h1 {
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px; }

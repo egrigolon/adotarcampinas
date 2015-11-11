@@ -21,7 +21,39 @@ module.exports = function (grunt) {
     sass: {
       dist: {
         files: {
-          'public/css/style.css': 'public/css/style.scss'
+          'public/css/<%= pkg.name %>.css': 'app/css/<%= pkg.name %>.scss'
+        }
+      }
+    },
+    concat: {
+      options: {
+        separator: '\n'
+      },
+      dist: {
+        src: ['app/js/**/*.js'],
+        dest: 'public/js/<%= pkg.name %>.js'
+      },
+      vendor: {
+        src: [
+          'public/components/jquery/dist/jquery.min.js'
+        ],
+        dest: 'public/js/vendor.min.js'
+      }
+    },
+    uglify: {
+      options: {
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+      },
+      js: {
+        files: {
+          'public/js/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+        }
+      }
+    },
+    cssmin: {
+      compress: {
+        files: {
+          'public/css/<%= pkg.name %>.min.css': ['public/css/<%= pkg.name %>.css']
         }
       }
     },
@@ -40,9 +72,9 @@ module.exports = function (grunt) {
       },
       css: {
         files: [
-          'public/css/*.scss'
+          'app/css/*.scss'
         ],
-        tasks: ['sass'],
+        tasks: ['sass', 'cssmin'],
         options: {
           livereload: reloadPort
         }
@@ -53,6 +85,12 @@ module.exports = function (grunt) {
           'app/views/**/*.handlebars'
         ],
         options: { livereload: reloadPort }
+      },
+      scripts: {
+        files: [
+          'app/js/**/*.js'
+        ],
+        tasks: ['concat', 'uglify']
       }
     }
   });
@@ -60,6 +98,10 @@ module.exports = function (grunt) {
   grunt.config.requires('watch.js.files');
   files = grunt.config('watch.js.files');
   files = grunt.file.expand(files);
+
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   grunt.registerTask('delayed-livereload', 'Live reload after the node server has restarted.', function () {
     var done = this.async();
@@ -78,6 +120,9 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'sass',
     'develop',
+    'concat',
+    'uglify',
+    'cssmin',
     'watch'
   ]);
 };
